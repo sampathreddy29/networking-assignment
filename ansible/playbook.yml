@@ -1,0 +1,33 @@
+---
+- name: Configure Terraform EC2 Server
+  hosts: servers
+  become: yes
+
+  tasks:
+    - name: Install required packages for Docker
+      yum:
+        name:
+          - yum-utils
+          - device-mapper-persistent-data
+          - lvm2
+        state: present
+
+    - name: Enable Docker repo
+      command: amazon-linux-extras enable docker
+
+    - name: Install Docker
+      yum:
+        name: docker
+        state: present
+
+    - name: Start and enable Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Add ec2-user to Docker group
+      user:
+        name: ec2-user
+        groups: docker
+        append: yes

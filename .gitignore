@@ -1,0 +1,5 @@
+aws-ec2-setup/.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars 
+git rm -r --cached .terraform
